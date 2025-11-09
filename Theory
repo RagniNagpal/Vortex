@@ -1,0 +1,43 @@
+Shadecn
+do exect what docs said in installation thru vite
+
+# 1️⃣ Create a new Vite React project
+npm create vite@latest vortex -- --template react
+
+# 2️⃣ Move inside the project folder
+cd vortex
+
+# 3️⃣ Install dependencies
+npm install
+
+# 4️⃣ Install TailwindCSS + PostCSS + Autoprefixer
+npm install -D tailwindcss postcss autoprefixer
+
+# 5️⃣ Initialize Tailwind config files
+npx tailwindcss init -p
+
+# 6️⃣ Configure Tailwind in your src/index.css
+# (open src/index.css and add these lines at the top)
+# ----------------------------------------------
+# @tailwind base;
+# @tailwind components;
+# @tailwind utilities;
+# ----------------------------------------------
+
+# 7️⃣ Install and setup ShadCN UI (latest)
+npx shadcn@latest init
+
+# 8️⃣ When prompted, select:
+#    • Style → New York (Recommended)
+#    • Base color → Slate
+#    (then it will auto setup Tailwind + ShadCN config)
+
+# 9️⃣ Add your first UI components (example)
+npx shadcn@latest add button card input textarea dialog
+
+# 10️⃣ Run development server
+npm run dev
+npm install @tailwindcss/vite --save-dev
+
+
+28:30g
