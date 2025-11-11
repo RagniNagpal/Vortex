@@ -39,5 +39,4 @@ npx shadcn@latest add button card input textarea dialog
 npm run dev
 npm install @tailwindcss/vite --save-dev
 
-
-28:30g
+Radix ui
