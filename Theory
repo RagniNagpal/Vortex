@@ -41,4 +41,8 @@ npm install @tailwindcss/vite --save-dev
 
 Radix ui
 
-<!-- 46 -->
+<!--1.13.45-->
+
+
+//node
+npm i express dotenv cors cookie-parser mongoose bcrypt jsonwebtoken
