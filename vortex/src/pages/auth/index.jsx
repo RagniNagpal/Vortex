@@ -4,18 +4,42 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Background from "@/assets/login2.png";
+import {toast} from "sonner";
+import {apiClient} from "@/lib/api-client.js";
+import { SIGNUP_ROUTE } from "@/utils/constants.js";
+import { LOGIN_ROUTE } from "@/utils/constants.js";
+
 
 const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const validateSignup=()=>{
+    if(!email.length){
+      toast.error("Email is required");
+      return false;
+    }
+    if(!password.length){
+      toast.error("Password is required");
+      return false;
+    }
+    if(password !== confirmPassword){
+      toast.error("Email and password should be same");
+      return false;
+    }
+    return true;
+  }
+
   const handleLogin = async () => {
-    console.log("Login with:", { email, password });
+    
   };
 
   const handleSignup = async () => {
-    console.log("Signup with:", { email, password, confirmPassword });
+    if(validateSignup()){
+      const response=await apiClient.post(SIGNUP_ROUTE,{email,password});
+      console.log({response});
+    }
   };
 
   return (
@@ -112,7 +136,7 @@ const Auth = () => {
           </Tabs>
         </div>
       </div>
-      <div classname="flex justify-center items-center">
+      <div className="flex justify-center items-center">
         <img src={Background}
          alt="background login" className="h-[700px]" / >
       </div>
