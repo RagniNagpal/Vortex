@@ -4,48 +4,103 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Background from "@/assets/login2.png";
-import {toast} from "sonner";
-import {apiClient} from "@/lib/api-client.js";
-import { SIGNUP_ROUTE } from "@/utils/constants.js";
-import { LOGIN_ROUTE } from "@/utils/constants.js";
+import { toast } from "sonner";
+import apiClient from "@/lib/api-client";
+import { useNavigate } from "react-router-dom";
 
+import { SIGNUP_ROUTE, LOGIN_ROUTE } from "@/utils/constants.js";
 
 const Auth = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const validateSignup=()=>{
-    if(!email.length){
+  // ----------------- Validation Functions -----------------
+  const validateSignup = () => {
+    if (!email.length) {
       toast.error("Email is required");
       return false;
     }
-    if(!password.length){
+    if (!password.length) {
       toast.error("Password is required");
       return false;
     }
-    if(password !== confirmPassword){
-      toast.error("Email and password should be same");
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match");
       return false;
     }
     return true;
-  }
-
-  const handleLogin = async () => {
-    
   };
 
-  const handleSignup = async () => {
-    if(validateSignup()){
-      const response=await apiClient.post(SIGNUP_ROUTE,{email,password});
-      console.log({response});
+  const validateLogin = () => {
+    if (!email.length) {
+      toast.error("Email is required");
+      return false;
+    }
+    if (!password.length) {
+      toast.error("Password is required");
+      return false;
+    }
+    return true;
+  };
+
+  // ----------------- Login -----------------
+  const handleLogin = async () => {
+    if (!validateLogin()) return;
+
+    try {
+      const response = await apiClient.post(
+        LOGIN_ROUTE,
+        { email, password },
+        { withCredentials: true }
+      );
+      console.log({ response });
+
+      toast.success("Login successful!");
+      if (response.data.user.profileSetup) navigate("/chat");
+      else navigate("/profile");
+    } catch (error) {
+      console.log(error);
+      if (error.response?.status === 404) {
+        toast.error("User not found");
+      } else if (error.response?.status === 401) {
+        toast.error("Invalid credentials");
+      } else {
+        toast.error("Something went wrong");
+      }
     }
   };
 
+  // ----------------- Signup -----------------
+  const handleSignup = async () => {
+    if (!validateSignup()) return;
+
+    try {
+      const response = await apiClient.post(
+        SIGNUP_ROUTE,
+        { email, password },
+        { withCredentials: true }
+      );
+      console.log({ response });
+
+      toast.success("Signup successful!");
+      if (response.data.user.profileSetup) navigate("/chat");
+      else navigate("/profile");
+    } catch (error) {
+      console.log(error);
+      if (error.response?.status === 409) {
+        toast.error("Email already exists");
+      } else {
+        toast.error("Something went wrong");
+      }
+    }
+  };
+
+  // ----------------- JSX -----------------
   return (
     <div className="h-[100vh] w-[100vw] flex items-center justify-center">
       <div className="h-[80vh] bg-white border-2 border-white text-opacity-90 shadow-2xl w-[80vw] md:w-[90vw] lg:w-[70vw] xl:w-[60vw] rounded-3xl grid xl:grid-cols-2">
-        
         {/* Left section */}
         <div className="flex flex-col gap-10 items-center justify-center">
           <div className="flex items-center justify-center flex-col">
@@ -136,9 +191,9 @@ const Auth = () => {
           </Tabs>
         </div>
       </div>
+
       <div className="flex justify-center items-center">
-        <img src={Background}
-         alt="background login" className="h-[700px]" / >
+        <img src={Background} alt="background login" className="h-[700px]" />
       </div>
     </div>
   );
