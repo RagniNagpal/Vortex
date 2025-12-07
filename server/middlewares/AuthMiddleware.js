@@ -7,5 +7,6 @@ export const verifyToken = (request,response,next)=>{
       if(err) return response.status(403).send("Token is not valid!");
       request.userId=payload.userId;
       next();
+      
     })
 }
