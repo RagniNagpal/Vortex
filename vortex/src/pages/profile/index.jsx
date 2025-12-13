@@ -3,7 +3,8 @@ import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import { IoArrowBack } from "react-icons/io5";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
+import {getColor} from "@/lib/utils";
+import {FaPlus, FaTrash} from "react-icons/fa";
 
 const Profile = () => {
   const navigate=useNavigate();
@@ -38,13 +39,27 @@ const Profile = () => {
                   {firstName ? firstName.split("").shift() : userInfo.email.split("").shift()}</div>
               )}
             </Avatar>
-            {
-              hovered && (
-                <div>
-                  image ? <FaTrast
-                  </div>
-              )
-            }
+            { hovered && (
+              <div className="absolute inset-0 flex items-center justify-center bg-black/50 ring-fuchsia-50 rfull">
+                {image ? (
+                  <FaTrast className="text-white text-3xl cursor-pointer" />
+                ) : (
+                  <FaPlus className="text-white text-3xl cursor-pointer" />
+                )}
+              </div>
+            )}
+          {/* <input type="text" */}
+          </div>
+          <div className="flex min-w-32 md:min-w-64 flex-col gap-5 text-white items-center justify-center">
+            <div className="w-full">
+              <Input placeholder="Email" type="email" disabled value={userInfo.email} className="rounded-lg p-6 bg-[#2c2e3b] border-none" />
+            </div>
+            <div className="w-full">
+              <Input placeholder="Email" type="email" disabled value={userInfo.email} className="rounded-lg p-6 bg-[#2c2e3b] border-none" />
+            </div>
+            <div className="w-full">
+              <Input placeholder="Email" type="email" disabled value={userInfo.email} className="rounded-lg p-6 bg-[#2c2e3b] border-none" />
+            </div>
           </div>
         </div>
       </div>
