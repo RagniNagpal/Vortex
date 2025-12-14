@@ -41,9 +41,6 @@ npm install @tailwindcss/vite --save-dev
 
 Radix ui
 
-<!--1.30.09-->
-
-
 //node
 npm i express dotenv cors cookie-parser mongoose bcrypt jsonwebtoken
 
@@ -51,4 +48,4 @@ npm i express dotenv cors cookie-parser mongoose bcrypt jsonwebtoken
 ZUSTAND
 
 
-2:20:51
+2:25:09
